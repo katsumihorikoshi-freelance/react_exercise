@@ -24,3 +24,9 @@ yarn-error.log*
 
 # webstorm settings
 /.idea
+
+# firebase cache
+/.firebase
+
+# firebase admin sdk file
+react-exercise-firebase-adminsdk.json
