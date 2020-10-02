@@ -14,6 +14,7 @@
       "**/node_modules/**"
     ],
     "rewrites": [
+      {"source": "/members", "function": "members"},
       {
         "source": "**",
         "destination": "/index.html"
