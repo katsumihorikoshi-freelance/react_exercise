@@ -4,7 +4,11 @@ import firebase from 'firebase/app';
 
 import './index.css';
 import axios from 'axios';
-import App from './App';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootSlice } from 'slice';
+import { StateInspector } from 'reinspect';
+import EnhancedApp from './ContainerApp';
 import firebaseConfig from './firebase-config';
 
 import * as serviceWorker from './serviceWorker';
@@ -13,12 +17,16 @@ firebase.initializeApp(firebaseConfig);
 
 void axios.get('/members').then((res) => console.dir(res));
 
-console.log('hoge');
+const store = configureStore({ reducer: rootSlice.reducer });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <StateInspector name="EnhancedApp">
+        <EnhancedApp />
+      </StateInspector>
+    </React.StrictMode>
+  </Provider>,
 
   document.getElementById('root'),
 );
