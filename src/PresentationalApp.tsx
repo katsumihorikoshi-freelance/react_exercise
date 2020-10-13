@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { type } from 'os';
 
 type CounterProps = {
   count?: number;

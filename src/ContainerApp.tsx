@@ -1,68 +1,33 @@
 import React, { FC } from 'react';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useReducer } from 'reinspect';
-import logo from './logo.svg';
 import './App.css';
 import PresentationalApp from './PresentationalApp';
 
-const CounterActionType = {
-  add: 'counter/add',
-  decrement: 'counter/decrement',
-  increment: 'counter/increment',
-} as const;
-
-type ValueOf<T> = T[keyof T];
-type CounterAction = {
-  type: ValueOf<typeof CounterActionType>;
-  payload?: number;
-};
-
 type CounterState = { count: number };
-const initializeState: CounterState = { count: 0 };
-const counterReducer = (
-  state: CounterState,
-  action: CounterAction,
-): CounterState => {
-  switch (action.type) {
-    case CounterActionType.add:
-      return {
-        ...state,
-        count: state.count + (action.payload ?? 0),
-      };
-    case CounterActionType.decrement:
-      return {
-        ...state,
-        count: state.count - 1,
-      };
-    case CounterActionType.increment:
-      return {
-        ...state,
-        count: state.count + 1,
-      };
-    default: {
-      const _: never = action.type;
+const initialState: CounterState = { count: 0 };
 
-      return state;
-    }
-  }
-};
-const add = (payload: number): CounterAction => ({
-  type: CounterActionType.add,
-  payload,
-});
-const decrement = (): CounterAction => ({
-  type: CounterActionType.decrement,
-});
-const increment = (): CounterAction => ({
-  type: CounterActionType.increment,
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    add: (state, action: PayloadAction<number>) => ({
+      ...state,
+      count: state.count + action.payload,
+    }),
+    decrement: (state) => ({ ...state, count: state.count - 1 }),
+    increment: (state) => ({ ...state, count: state.count + 1 }),
+  },
 });
 
-const EnhancedApp: FC = () => {
+const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
   const [state, dispatch] = useReducer(
-    counterReducer,
-    initializeState,
-    (state) => state,
+    counterSlice.reducer,
+    initialCount,
+    (count: number): CounterState => ({ count }),
     1,
   );
+  const { add, decrement, increment } = counterSlice.actions;
 
   return (
     <PresentationalApp
