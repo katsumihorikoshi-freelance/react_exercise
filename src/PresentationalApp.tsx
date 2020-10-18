@@ -51,10 +51,10 @@ const PresentationalApp: FC<Required<CounterProps>> = ({
             ))}
           </Table.Body>
         </Table>
-        <p>count: {count}</p>
+        {/* <p>count: {count}</p>
         <Button onClick={() => add}>add</Button>
         <Button onClick={decrement}>-</Button>
-        <Button onClick={increment}>+</Button>
+        <Button onClick={increment}>+</Button> */}
       </>
     )}
   </div>
