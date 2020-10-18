@@ -5,4 +5,5 @@ export const collectionName = {
   members: 'members',
   docCounters: 'docCounters',
   feedMemos: 'feedMemos',
+  forces: 'forces',
 } as const;

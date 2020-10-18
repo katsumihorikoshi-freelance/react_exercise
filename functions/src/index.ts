@@ -5,13 +5,17 @@ import { collectionName } from './services/constants';
 
 admin.initializeApp();
 
-export const members = functions
-  .region('asia-northeast1')
-  .https.onRequest(async (req, res) => {
-    const snap = await admin
-      .firestore()
-      .collection(collectionName.members)
-      .get();
+// region
+const func = functions.region('asia-northeast1');
+
+// fetch collection logic
+const fetchByCollectionName = (name: string) =>
+  func.https.onRequest(async (req, res) => {
+    const snap = await admin.firestore().collection(name).get();
     const data = snap.docs.map((doc) => doc.data());
-    res.send({ data });
+
+    res.send({ [name]: data });
   });
+
+export const members = fetchByCollectionName(collectionName.members);
+export const forces = fetchByCollectionName(collectionName.forces);

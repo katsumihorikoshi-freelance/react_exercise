@@ -15,6 +15,7 @@
     ],
     "rewrites": [
       {"source": "/members", "function": "members"},
+      {"source": "/forces", "function": "forces"},
       {
         "source": "**",
         "destination": "/index.html"

@@ -3,21 +3,19 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase/app';
 
 import './index.css';
-import axios from 'axios';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { rootSlice } from 'slice';
 import { StateInspector } from 'reinspect';
-import EnhancedApp from './ContainerApp';
+import { counterSlice, EnhancedApp } from './ContainerApp';
 import firebaseConfig from './firebase-config';
+
+import 'semantic-ui-css/semantic.min.css';
 
 import * as serviceWorker from './serviceWorker';
 
 firebase.initializeApp(firebaseConfig);
 
-void axios.get('/members').then((res) => console.dir(res));
-
-const store = configureStore({ reducer: rootSlice.reducer });
+const store = configureStore({ reducer: counterSlice.reducer });
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import axios from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useReducer } from 'reinspect';
 import './App.css';
-import PresentationalApp from './PresentationalApp';
+import PresentationalApp, { Force } from './PresentationalApp';
 
 type CounterState = { count: number };
 const initialState: CounterState = { count: 0 };
@@ -28,6 +29,23 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
     1,
   );
   const { add, decrement, increment } = counterSlice.actions;
+  const [dummy, setDummy] = useState<Force[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const load = async (): Promise<void> => {
+      setIsLoading(true);
+      axios
+        .get('/forces')
+        .then((res) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          setDummy(res.data.forces);
+        })
+        .catch((error) => console.log(error))
+        .finally(() => setIsLoading(false));
+    };
+
+    void load();
+  }, []);
 
   return (
     <PresentationalApp
@@ -35,8 +53,10 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
       add={(amount: number) => dispatch(add(amount))}
       decrement={() => dispatch(decrement())}
       increment={() => dispatch(increment())}
+      isLoading={isLoading}
+      data={dummy}
     />
   );
 };
 
-export default EnhancedApp;
+export { counterSlice, EnhancedApp };
