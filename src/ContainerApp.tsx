@@ -35,7 +35,9 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
     const load = async (): Promise<void> => {
       setIsLoading(true);
       axios
-        .get('/forces')
+        .get(
+          'https://us-central1-react-exercise2.cloudfunctions.net/app/forces',
+        )
         .then((res) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           setDummy(res.data.forces);

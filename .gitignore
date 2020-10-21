@@ -30,6 +30,7 @@ yarn-error.log*
 
 # firebase admin sdk file
 react-exercise-firebase-adminsdk.json
+react-exercise2-firebase-adminsdk.json
 
 # nodenv settings for cloud function
 /functions/.node-version

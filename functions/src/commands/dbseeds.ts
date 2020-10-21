@@ -7,7 +7,7 @@ import { Member } from '../services/models/member';
 import { collectionName } from '../services/constants';
 import { addCounter } from '../firestore-admin/record-counter';
 
-import serviceAccount from '../react-exercise-firebase-adminsdk.json';
+import serviceAccount from '../react-exercise2-firebase-adminsdk.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
