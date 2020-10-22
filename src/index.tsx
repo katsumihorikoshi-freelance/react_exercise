@@ -5,7 +5,6 @@ import firebase from 'firebase/app';
 import './index.css';
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { StateInspector } from 'reinspect';
 import { BrowserRouter } from 'react-router-dom';
 import App from 'App';
 import { crewSlice } from 'features/crew';
@@ -28,11 +27,9 @@ const store = configureStore({
 ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
-      <StateInspector name="EnhancedApp">
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </StateInspector>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </React.StrictMode>
   </Provider>,
 
