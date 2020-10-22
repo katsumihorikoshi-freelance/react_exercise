@@ -2,8 +2,8 @@ import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useReducer } from 'reinspect';
-import './App.css';
-import PresentationalApp, { Force } from './PresentationalApp';
+import 'App.css';
+import Crews, { Crew } from '../components/Crews';
 
 type CounterState = { count: number };
 const initialState: CounterState = { count: 0 };
@@ -21,7 +21,7 @@ const counterSlice = createSlice({
   },
 });
 
-const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
+const EnhancedCrews: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
   const [state, dispatch] = useReducer(
     counterSlice.reducer,
     initialCount,
@@ -29,15 +29,13 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
     1,
   );
   const { add, decrement, increment } = counterSlice.actions;
-  const [dummy, setDummy] = useState<Force[]>([]);
+  const [dummy, setDummy] = useState<Crew[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const load = async (): Promise<void> => {
       setIsLoading(true);
       axios
-        .get(
-          'https://us-central1-react-exercise2.cloudfunctions.net/app/forces',
-        )
+        .get('https://us-central1-react-exercise2.cloudfunctions.net/app/crews')
         .then((res) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           setDummy(res.data.forces);
@@ -50,7 +48,7 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
   }, []);
 
   return (
-    <PresentationalApp
+    <Crews
       count={state.count}
       add={(amount: number) => dispatch(add(amount))}
       decrement={() => dispatch(decrement())}
@@ -61,4 +59,4 @@ const EnhancedApp: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
   );
 };
 
-export { counterSlice, EnhancedApp };
+export { counterSlice, EnhancedCrews };

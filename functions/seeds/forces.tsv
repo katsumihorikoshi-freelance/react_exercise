@@ -1,6 +1,6 @@
-id	name	nameReading
-federalforce	地球連邦軍	チキュウレンポウグン
-zeonforce	ジオン軍	ジオングン
-titans	ティターンズ	ティターンズ
-aeug	エゥーゴ	エゥーゴ
-neozeonforce	ネオジオン軍	ネオジオン軍
+id	code	name	nameReading
+1	federalforce	地球連邦軍	チキュウレンポウグン
+2	zeonforce	ジオン軍	ジオングン
+3	titans	ティターンズ	ティターンズ
+4	aeug	エゥーゴ	エゥーゴ
+5	neozeonforce	ネオジオン軍	ネオジオン軍

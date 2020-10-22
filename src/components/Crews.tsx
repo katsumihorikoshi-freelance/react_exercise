@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import { Button, Dimmer, Header, Loader, Table } from 'semantic-ui-react';
-import './App.css';
+import 'App.css';
 
-export type Force = {
-  id: string;
+export type Crew = {
+  code: string;
+  forceCode: string;
   name: string;
   nameReading: string;
 };
@@ -14,10 +15,10 @@ type CounterProps = {
   decrement: () => void;
   increment: () => void;
   isLoading: boolean;
-  data: Force[];
+  data: Crew[];
 };
 
-const PresentationalApp: FC<Required<CounterProps>> = ({
+const Crews: FC<Required<CounterProps>> = ({
   count = 0,
   add = () => undefined,
   decrement = () => undefined,
@@ -36,7 +37,8 @@ const PresentationalApp: FC<Required<CounterProps>> = ({
         <Table celled>
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell>ID</Table.HeaderCell>
+              <Table.HeaderCell>Code</Table.HeaderCell>
+              <Table.HeaderCell>ForceCord</Table.HeaderCell>
               <Table.HeaderCell>Name</Table.HeaderCell>
               <Table.HeaderCell>ReadingName</Table.HeaderCell>
             </Table.Row>
@@ -44,7 +46,8 @@ const PresentationalApp: FC<Required<CounterProps>> = ({
           <Table.Body>
             {data.map((d) => (
               <Table.Row>
-                <Table.Cell>{d.id}</Table.Cell>
+                <Table.Cell>{d.code}</Table.Cell>
+                <Table.Cell>{d.forceCode}</Table.Cell>
                 <Table.Cell>{d.name}</Table.Cell>
                 <Table.Cell>{d.nameReading}</Table.Cell>
               </Table.Row>
@@ -60,4 +63,4 @@ const PresentationalApp: FC<Required<CounterProps>> = ({
   </div>
 );
 
-export default PresentationalApp;
+export default Crews;

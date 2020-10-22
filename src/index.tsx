@@ -6,7 +6,9 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { StateInspector } from 'reinspect';
-import { counterSlice, EnhancedApp } from './ContainerApp';
+import { BrowserRouter } from 'react-router-dom';
+import App from 'App';
+import { counterSlice } from './containers/Home';
 import firebaseConfig from './firebase-config';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -21,7 +23,9 @@ ReactDOM.render(
   <Provider store={store}>
     <React.StrictMode>
       <StateInspector name="EnhancedApp">
-        <EnhancedApp />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </StateInspector>
     </React.StrictMode>
   </Provider>,

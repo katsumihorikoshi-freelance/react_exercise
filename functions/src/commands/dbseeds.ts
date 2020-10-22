@@ -26,6 +26,7 @@ const uploadSeed = async (collection: string, seedFile: string) => {
 
   switch (collection) {
     case collectionName.members:
+    case collectionName.crews:
     case collectionName.forces: {
       const docs =
         records.map((record: Member) => ({
