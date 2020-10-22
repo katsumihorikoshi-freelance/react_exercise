@@ -18,13 +18,24 @@ expressApp.get('/', (req, res) => {
 });
 
 // collection allselect logic
-[collectionName.forces, collectionName.crews].forEach((name) => {
+[collectionName.forces].forEach((name) => {
   expressApp.get(`/${name}`, async (req, res) => {
     const snap = await admin.firestore().collection(name).get();
     const data = snap.docs.map((doc) => doc.data());
 
     res.send({ forces: data });
   });
+});
+
+expressApp.get('/crews', async (req, res) => {
+  const snap = await admin
+    .firestore()
+    .collection('crews')
+    .where('forceCode', '==', req.query.forceCode)
+    .get();
+  const data = snap.docs.map((doc) => doc.data());
+
+  res.send({ crews: data });
 });
 
 exports.app = func.https.onRequest(expressApp);

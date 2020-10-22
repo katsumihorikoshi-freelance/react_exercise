@@ -9,7 +9,7 @@ import { EnhancedCrews } from 'containers/Crews';
 const App: FC = () => (
   <>
     <Route exact path="/" component={EnhancedHome} />
-    <Route exact path="/crews" component={EnhancedCrews} />
+    <Route path="/crews/:forceCode" component={EnhancedCrews} />
   </>
 );
 

@@ -1,37 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
 import axios from 'axios';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { useReducer } from 'reinspect';
 import 'App.css';
-import Home, { Force } from '../components/Home';
+import { useDispatch, useSelector } from 'react-redux';
+import { Force } from 'domains/force';
+import { forceSlice } from 'features/force';
+import { RootState } from 'features';
+import Home from '../components/Home';
 
-type CounterState = { count: number };
-const initialState: CounterState = { count: 0 };
-
-const counterSlice = createSlice({
-  name: 'counter',
-  initialState,
-  reducers: {
-    add: (state, action: PayloadAction<number>) => ({
-      ...state,
-      count: state.count + action.payload,
-    }),
-    decrement: (state) => ({ ...state, count: state.count - 1 }),
-    increment: (state) => ({ ...state, count: state.count + 1 }),
-  },
-});
-
-const EnhancedHome: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
-  const [state, dispatch] = useReducer(
-    counterSlice.reducer,
-    initialCount,
-    (count: number): CounterState => ({ count }),
-    1,
+const EnhancedHome: FC = () => {
+  const forces = useSelector<RootState, Force[]>(
+    (state: RootState) => state.force.forces,
   );
-  const { add, decrement, increment } = counterSlice.actions;
-  const [dummy, setDummy] = useState<Force[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
+    const { update } = forceSlice.actions;
+
     const load = async (): Promise<void> => {
       setIsLoading(true);
       axios
@@ -40,7 +24,7 @@ const EnhancedHome: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
         )
         .then((res) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          setDummy(res.data.forces);
+          dispatch(update(res.data.forces));
         })
         .catch((error) => console.log(error))
         .finally(() => setIsLoading(false));
@@ -49,16 +33,7 @@ const EnhancedHome: FC<{ initialCount?: number }> = ({ initialCount = 0 }) => {
     void load();
   }, []);
 
-  return (
-    <Home
-      count={state.count}
-      add={(amount: number) => dispatch(add(amount))}
-      decrement={() => dispatch(decrement())}
-      increment={() => dispatch(increment())}
-      isLoading={isLoading}
-      data={dummy}
-    />
-  );
+  return <Home forces={forces} isLoading={isLoading} />;
 };
 
-export { counterSlice, EnhancedHome };
+export { forceSlice, EnhancedHome };

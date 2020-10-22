@@ -4,11 +4,12 @@ import firebase from 'firebase/app';
 
 import './index.css';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { StateInspector } from 'reinspect';
 import { BrowserRouter } from 'react-router-dom';
 import App from 'App';
-import { counterSlice } from './containers/Home';
+import { crewSlice } from 'features/crew';
+import { forceSlice } from './containers/Home';
 import firebaseConfig from './firebase-config';
 
 import 'semantic-ui-css/semantic.min.css';
@@ -17,7 +18,12 @@ import * as serviceWorker from './serviceWorker';
 
 firebase.initializeApp(firebaseConfig);
 
-const store = configureStore({ reducer: counterSlice.reducer });
+const store = configureStore({
+  reducer: combineReducers({
+    force: forceSlice.reducer,
+    crew: crewSlice.reducer,
+  }),
+});
 
 ReactDOM.render(
   <Provider store={store}>
